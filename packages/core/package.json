@@ -1,6 +1,6 @@
 {
   "name": "@my-template-cli/core",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "my-template-cli core",
   "author": "liangchaofei <chaofei_liang@126.com>",
   "homepage": "",
@@ -13,6 +13,9 @@
   "files": [
     "lib"
   ],
+  "bin": {
+    "my-template-cli": "bin/index.js"
+  },
   "publishConfig": {
     "registry": "http://registry.npmjs.org/"
   },
@@ -21,5 +24,6 @@
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
-  }
+  },
+  "gitHead": "948117cb977785ed196bec49aec0a603255ec06c"
 }
