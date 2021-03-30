@@ -1,6 +1,6 @@
 {
   "name": "@my-template-cli/core",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "my-template-cli core",
   "author": "liangchaofei <chaofei_liang@126.com>",
   "homepage": "",
@@ -17,7 +17,7 @@
     "registry": "http://registry.npmjs.org/"
   },
   "dependencies": {
-    "@my-template-cli/utils": "^1.0.0"
+    "@my-template-cli/utils": "^1.0.1"
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
