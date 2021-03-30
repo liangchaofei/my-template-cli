@@ -1,6 +1,6 @@
 {
   "name": "@my-template-cli/core",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "my-template-cli core",
   "author": "liangchaofei <chaofei_liang@126.com>",
   "homepage": "",
@@ -21,7 +21,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@my-template-cli/utils": "^1.0.1"
+    "@my-template-cli/utils": "^1.0.2"
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
