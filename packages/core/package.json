@@ -1,0 +1,25 @@
+{
+  "name": "@my-template-cli/core",
+  "version": "1.0.0",
+  "description": "my-template-cli core",
+  "author": "liangchaofei <chaofei_liang@126.com>",
+  "homepage": "",
+  "license": "ISC",
+  "main": "lib/core.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "registry": "http://registry.npmjs.org/"
+  },
+  "dependencies": {
+    "@my-template-cli/utils": "^1.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  }
+}
