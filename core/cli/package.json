@@ -21,7 +21,9 @@
     "access": "public"
   },
   "dependencies": {
-    "@my-template-cli/utils": "^1.0.2"
+    "@my-template-cli/utils": "file:../../utils/utils",
+    "import-local": "^3.0.2",
+    "npmlog": "^4.1.2"
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
