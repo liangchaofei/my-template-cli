@@ -9,6 +9,10 @@ const colors = require('colors/safe');
 const pkg = require('../package.json')
 const log = require('@my-template-cli/log')
 const costant = require('./const');
+
+
+let args;
+
 function core() {
     // TODO
     try{
@@ -16,6 +20,8 @@ function core() {
         checkNodeVersion()
         checktRoot()
         checkUserHome()
+        checkInputArgs()
+        log.verbose('debug', 'test debug')
     }catch(error){
         log.error(error.message)
     }
@@ -50,4 +56,18 @@ function checkUserHome(){
     if(!userHome || !pathExists){
         throw new Error(colors.red('当前登录用户主目录不存在!'))
     }
+}
+// 检查入参,是否debug模式
+function checkInputArgs(){
+    const minimist = require('minimist')
+    args = minimist(process.argv.slice(2));
+    checkArgs()
+}
+function checkArgs(){
+    if(args.debug){
+        process.env.LOG_LEVEL = 'verbose'
+    }else{
+        process.env.LOG_LEVEL = 'info'
+    }
+    log.level = process.env.LOG_LEVEL;
 }
