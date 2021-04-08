@@ -2,16 +2,17 @@
 
 module.exports = core;
 
+const path = require('path')
 const semver = require('semver');
 const userHome = require('user-home');
-const pathExists = require('path-exists');
+const pathExists = require('path-exists').sync;
 const colors = require('colors/safe');
 const pkg = require('../package.json')
 const log = require('@my-template-cli/log')
 const costant = require('./const');
 
 
-let args;
+let args, config;
 
 function core() {
     // TODO
@@ -22,6 +23,7 @@ function core() {
         checkUserHome()
         checkInputArgs()
         log.verbose('debug', 'test debug')
+        checkEnv()
     }catch(error){
         log.error(error.message)
     }
@@ -70,4 +72,29 @@ function checkArgs(){
         process.env.LOG_LEVEL = 'info'
     }
     log.level = process.env.LOG_LEVEL;
+}
+
+// 检查环境变量
+function checkEnv(){
+    const dotenv = require('dotenv')
+    const dotenvPath = path.resolve(userHome, '.env');
+    if(pathExists(dotenvPath)){
+        dotenv.config({
+            path: dotenvPath
+        });
+    }
+    config = createDefaultConfig()
+  
+    log.verbose('环境变量', process.env.CLI_HOME_PATH)
+}
+function createDefaultConfig(){
+    const cliConfig = {
+        home: userHome
+    }
+    if(process.env.CLI_HOME){
+        cliConfig['cliHome'] = path.join(userHome, process.env.CLI_HOME)
+    }else{
+        cliConfig['cliHome'] = path.join(userHome, constants.DEFAULT_CLI_HOME)
+    }
+    process.env.CLI_HOME_PATH = cliConfig.cliHome;
 }
