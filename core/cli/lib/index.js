@@ -107,10 +107,9 @@ async function checkGlobalUpdate(){
     const npmName = pkg.name;
     // 2.调用npm api，获取所有版本号
     const { getNpmSemverVersion } = require('@my-template-cli/get-npm-info')
+    // 3.获取最新的版本号，提示用户更新到该版本
     const lastVersions = await getNpmSemverVersion(currentVersion, npmName)
     if(lastVersions && semver.gt(lastVersions, currentVersion)){
-        log.warn(colors.yellow(`请手动更新 ${npmName}，当前版本：${currentVersion}，最新版本：${lastVersions}，更新命令：npm install -g ${npmName}`))
+        log.warn(colors.yellow(`请手动更新 ${npmName}， 当前版本：${currentVersion}，最新版本：${lastVersions}，更新命令：npm install -g ${npmName}`))
     }
-    // 3.提取所有版本号，比对哪些版本号是大于当前版本号
-    // 4.获取最新的版本号，提示用户更新到该版本
 }
