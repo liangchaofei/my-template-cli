@@ -14,7 +14,7 @@ const costant = require('./const');
 
 let args, config;
 
-function core() {
+async function core() {
     // TODO
     try{
         checkPkgVersion()
@@ -24,6 +24,7 @@ function core() {
         checkInputArgs()
         log.verbose('debug', 'test debug')
         checkEnv()
+        await checkGlobalUpdate()
     }catch(error){
         log.error(error.message)
     }
@@ -97,4 +98,19 @@ function createDefaultConfig(){
         cliConfig['cliHome'] = path.join(userHome, constants.DEFAULT_CLI_HOME)
     }
     process.env.CLI_HOME_PATH = cliConfig.cliHome;
+}
+
+// 检查是否全局更新
+async function checkGlobalUpdate(){
+    // 1.获取当前版本号和模块名
+    const currentVersion = pkg.version;
+    const npmName = pkg.name;
+    // 2.调用npm api，获取所有版本号
+    const { getNpmSemverVersion } = require('@my-template-cli/get-npm-info')
+    const lastVersions = await getNpmSemverVersion(currentVersion, npmName)
+    if(lastVersions && semver.gt(lastVersions, currentVersion)){
+        log.warn(colors.yellow(`请手动更新 ${npmName}，当前版本：${currentVersion}，最新版本：${lastVersions}，更新命令：npm install -g ${npmName}`))
+    }
+    // 3.提取所有版本号，比对哪些版本号是大于当前版本号
+    // 4.获取最新的版本号，提示用户更新到该版本
 }
