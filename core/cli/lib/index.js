@@ -9,10 +9,14 @@ const pathExists = require('path-exists').sync;
 const colors = require('colors/safe');
 const pkg = require('../package.json')
 const log = require('@my-template-cli/log')
+const commander = require('commander')
 const costant = require('./const');
 
 
 let args, config;
+
+const program = new commander.Command()
+
 
 async function core() {
     // TODO
@@ -21,7 +25,7 @@ async function core() {
         checkNodeVersion()
         checktRoot()
         checkUserHome()
-        checkInputArgs()
+        // checkInputArgs()
         log.verbose('debug', 'test debug')
         checkEnv()
         await checkGlobalUpdate()
@@ -33,7 +37,39 @@ async function core() {
 
 // 命令注册
 function registerCommand(){
+    program
+        .name(Object.keys(pkg.bin)[0])
+        .usage('<command> [options]')
+        .version(pkg.version)
+        .option('-d, --debug', '是否开启调试模式', false)
+    
+    // 开启debug
+    program.on('option:debug', function(){
+        if(program.debug){
+            process.env.LOG_LEVEL = 'verbose'
+        }else{
+            process.env.LOG_LEVEL = 'info'
+        }
+        log.level = process.env.LOG_LEVEL;
+        log.verbose('test')
+    })
 
+    // 对未知命令监听
+    program.on('command:*', function(obj){
+        const availableCommand = program.commands.map(cmd => cmd.name());
+        if(availableCommand.length > 0){
+            console.log(colors.red('可用命令：' + availableCommand.join(',')))
+        }
+        console.log(colors.red('未知的命令：'+ obj[0]))
+    })
+
+ 
+    program.parse(process.argv)
+    // 对没有输入命令的监听
+    if(program.args && program.args.length < 1){
+        program.outputHelp()
+        console.log()
+    }
 }
 // 检查版本号
 function checkPkgVersion(){
