@@ -9,6 +9,7 @@ const pathExists = require('path-exists').sync;
 const colors = require('colors/safe');
 const pkg = require('../package.json')
 const log = require('@my-template-cli/log')
+const init = require('@my-template-cli/init')
 const commander = require('commander')
 const costant = require('./const');
 
@@ -43,6 +44,13 @@ function registerCommand(){
         .version(pkg.version)
         .option('-d, --debug', '是否开启调试模式', false)
     
+
+    // 初始化
+    program
+        .command('init [options]')
+        .option('-f, --force', '是否强制初始化项目')
+        .action(init)
+
     // 开启debug
     program.on('option:debug', function(){
         if(program.debug){
