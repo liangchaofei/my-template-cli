@@ -25,11 +25,16 @@ async function core() {
         log.verbose('debug', 'test debug')
         checkEnv()
         await checkGlobalUpdate()
+        registerCommand()
     }catch(error){
         log.error(error.message)
     }
 }
 
+// 命令注册
+function registerCommand(){
+
+}
 // 检查版本号
 function checkPkgVersion(){
     log.notice('cli',pkg.version)
