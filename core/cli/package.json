@@ -21,6 +21,7 @@
     "access": "public"
   },
   "dependencies": {
+    "@my-template-cli/exec": "file:../exec",
     "@my-template-cli/get-npm-info": "file:../../utils/get-npm-info",
     "@my-template-cli/init": "file:../../commands/init",
     "@my-template-cli/log": "file:../../utils/log",

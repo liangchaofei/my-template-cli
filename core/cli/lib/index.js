@@ -10,6 +10,7 @@ const colors = require('colors/safe');
 const pkg = require('../package.json')
 const log = require('@my-template-cli/log')
 const init = require('@my-template-cli/init')
+const exec = require('@my-template-cli/exec')
 const commander = require('commander')
 const costant = require('./const');
 
@@ -22,14 +23,7 @@ const program = new commander.Command()
 async function core() {
     // TODO
     try{
-        checkPkgVersion()
-        checkNodeVersion()
-        checktRoot()
-        checkUserHome()
-        // checkInputArgs()
-        log.verbose('debug', 'test debug')
-        checkEnv()
-        await checkGlobalUpdate()
+        await prepare()
         registerCommand()
     }catch(error){
         log.error(error.message)
@@ -43,13 +37,14 @@ function registerCommand(){
         .usage('<command> [options]')
         .version(pkg.version)
         .option('-d, --debug', '是否开启调试模式', false)
+        .option('-tp, --targetPath <targetPath>', '是否指定本地调试文件路径','')
     
 
     // 初始化
     program
         .command('init [options]')
         .option('-f, --force', '是否强制初始化项目')
-        .action(init)
+        .action(exec)
 
     // 开启debug
     program.on('option:debug', function(){
@@ -62,6 +57,11 @@ function registerCommand(){
         log.verbose('test')
     })
 
+    // 指定targetPath
+    program.on('option:targetPath', function(){
+        console.log(program.targetPath)
+        process.env.CLI_TARGET_PATH = program.targetPath;
+    })
     // 对未知命令监听
     program.on('command:*', function(obj){
         const availableCommand = program.commands.map(cmd => cmd.name());
@@ -78,6 +78,15 @@ function registerCommand(){
         program.outputHelp()
         console.log()
     }
+}
+
+async function prepare(){
+    checkPkgVersion()
+    checkNodeVersion()
+    checktRoot()
+    checkUserHome()
+    checkEnv()
+    await checkGlobalUpdate()
 }
 // 检查版本号
 function checkPkgVersion(){
@@ -100,7 +109,6 @@ function checkNodeVersion(){
 function checktRoot(){
     const rootCheck = require('root-check');
     rootCheck()
-    console.log(process.geteuid()) 
 }
 
 // 检查用户主目录
@@ -109,20 +117,7 @@ function checkUserHome(){
         throw new Error(colors.red('当前登录用户主目录不存在!'))
     }
 }
-// 检查入参,是否debug模式
-function checkInputArgs(){
-    const minimist = require('minimist')
-    args = minimist(process.argv.slice(2));
-    checkArgs()
-}
-function checkArgs(){
-    if(args.debug){
-        process.env.LOG_LEVEL = 'verbose'
-    }else{
-        process.env.LOG_LEVEL = 'info'
-    }
-    log.level = process.env.LOG_LEVEL;
-}
+
 
 // 检查环境变量
 function checkEnv(){
@@ -134,8 +129,6 @@ function checkEnv(){
         });
     }
     config = createDefaultConfig()
-  
-    log.verbose('环境变量', process.env.CLI_HOME_PATH)
 }
 function createDefaultConfig(){
     const cliConfig = {
