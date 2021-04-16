@@ -1,0 +1,29 @@
+{
+  "name": "@my-template-cli/exec",
+  "version": "1.0.0",
+  "description": "exec",
+  "author": "liangchaofei <chaofei_liang@126.com>",
+  "homepage": "https://github.com/liangchaofei/my-template-cli#readme",
+  "license": "ISC",
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liangchaofei/my-template-cli.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/liangchaofei/my-template-cli/issues"
+  }
+}
