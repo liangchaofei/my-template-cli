@@ -1,7 +1,7 @@
 {
-  "name": "@my-template-cli/exec",
+  "name": "@my-template-cli/package",
   "version": "1.0.0",
-  "description": "exec",
+  "description": "cli npm module",
   "author": "liangchaofei <chaofei_liang@126.com>",
   "homepage": "https://github.com/liangchaofei/my-template-cli#readme",
   "license": "ISC",
@@ -25,8 +25,5 @@
   },
   "bugs": {
     "url": "https://github.com/liangchaofei/my-template-cli/issues"
-  },
-  "dependencies": {
-    "@my-template-cli/package": "file: ../../models/package"
   }
 }
