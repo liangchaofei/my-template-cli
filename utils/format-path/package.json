@@ -1,7 +1,7 @@
 {
-  "name": "@my-template-cli/package",
+  "name": "@my-template-cli/format-path",
   "version": "1.0.0",
-  "description": "cli npm module",
+  "description": "format path",
   "author": "liangchaofei <chaofei_liang@126.com>",
   "homepage": "https://github.com/liangchaofei/my-template-cli#readme",
   "license": "ISC",
@@ -25,10 +25,5 @@
   },
   "bugs": {
     "url": "https://github.com/liangchaofei/my-template-cli/issues"
-  },
-  "dependencies": {
-    "@my-template-cli/format-path": "file: ../../utils/format-path",
-    "@my-template-cli/utils": "file: ../../utils/utils",
-    "pkg-dir": "^5.0.0"
   }
 }
