@@ -1,5 +1,8 @@
 'use strict';
+const pkgDir = require('pkg-dir').sync;
+const path = require('path')
 const { isObject } = require('@my-template-cli/utils')
+const formatPath = require('@my-template-cli/format-path')
 class Package{
     constructor(options){
         if(!options){
@@ -10,8 +13,6 @@ class Package{
         }
         // package路径
         this.targetPath = options.targetPath;
-        // package存储路径
-        this.storePath = options.storePath;
         // package的name
         this.packageName = options.packageName;
         // package的version
@@ -28,7 +29,23 @@ class Package{
     update(){}
 
     // 获取入口文件的路径
-    getRootFilePath(){}
+    getRootFilePath(){
+        // 1.获取package.json所在目录，使用pkg-dir包
+        const dir = pkgDir(this.targetPath)
+        console.log(dir)
+        if(dir){
+            // 2.读取package.json , 使用require
+            const pkgFile = require(path.resolve(dir,'package.json'))
+            console.log('pkgFile',pkgFile)
+            // 3.main/lib, 输出path
+            if(pkgFile && pkgFile.main){
+                // 4.路径的兼容(mac/windows)
+                return formatPath(path.resolve(dir, pkgFile.main)) // 获取入口文件的绝对路径
+            }
+            
+        }
+        return null;
+    }
 }
 
 

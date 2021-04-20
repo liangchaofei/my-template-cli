@@ -7,18 +7,22 @@ const SETTINGS = {
 }
 
 function exec() {
-    const targetPath = process.env.CLI_TARGET_PATH;
+    let targetPath = process.env.CLI_TARGET_PATH;
     const homePath = process.env.CLI_HOME_PATH;
     const cmdObj = arguments[arguments.length - 1];
     const cmdName = cmdObj.name(); // 获取 init这个名称
     const packageName = SETTINGS[cmdName];
-    const packageVersion = 'latest'
+    const packageVersion = 'latest';
+
+    if(!targetPath){
+        targetPath = '' // 生成缓存路径
+    }
     const pkg = new Package({
         targetPath,
         packageName,
         packageVersion
     });
-    console.log(pkg)
+    console.log(pkg.getRootFilePath())
 }
 
 module.exports = exec;
