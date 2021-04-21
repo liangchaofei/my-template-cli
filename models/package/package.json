@@ -28,7 +28,9 @@
   },
   "dependencies": {
     "@my-template-cli/format-path": "file: ../../utils/format-path",
+    "@my-template-cli/get-npm-info": "file: ../../utils/get-npm-info",
     "@my-template-cli/utils": "file: ../../utils/utils",
+    "npminstall": "^4.11.0",
     "pkg-dir": "^5.0.0"
   }
 }
