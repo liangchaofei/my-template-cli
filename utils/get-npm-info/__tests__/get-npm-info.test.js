@@ -2,6 +2,6 @@
 
 const getNpmInfo = require('..');
 
-describe('get-npm-info', () => {
+describe('@my-template-cli/get-npm-info', () => {
     it('needs tests');
 });

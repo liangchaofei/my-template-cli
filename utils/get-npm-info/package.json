@@ -1,7 +1,7 @@
 {
-  "name": "get-npm-info",
-  "version": "1.0.2",
-  "description": "get npm info utils",
+  "name": "@my-template-cli/get-npm-info",
+  "version": "1.0.0",
+  "description": "get npm info",
   "author": "liangchaofei <chaofei_liang@126.com>",
   "homepage": "https://github.com/liangchaofei/my-template-cli#readme",
   "license": "ISC",
@@ -14,7 +14,7 @@
     "lib"
   ],
   "publishConfig": {
-    "registry": "https://bnpm.byted.org"
+    "access": "public"
   },
   "repository": {
     "type": "git",
