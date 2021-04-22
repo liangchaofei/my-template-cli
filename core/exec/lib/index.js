@@ -15,20 +15,21 @@ async function exec() {
     const cmdObj = arguments[arguments.length - 1];
     const cmdName = cmdObj.name(); // 获取 init这个名称
     const packageName = SETTINGS[cmdName];
-    const packageVersion = 'latest';
+    const packageVersion = '1.0.0';
 
     if(!targetPath){
         targetPath = path.resolve(homePath, CACHE_DIR) // 生成缓存路径
         storeDir = path.resolve(targetPath,'node_modules')
-        console.log(targetPath,storeDir)
         pkg = new Package({
             targetPath,
             storeDir,
             packageName,
             packageVersion
         });
-        if(pkg.exists()){
+        if(await pkg.exists()){
             // 更新package
+            console.log('更新package')
+            await pkg.update();
         }else{
             // 安装package
             await pkg.install();
