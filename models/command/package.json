@@ -1,7 +1,7 @@
 {
-  "name": "@my-template-cli/init",
+  "name": "@my-template-cli/command",
   "version": "1.0.0",
-  "description": "cli init",
+  "description": "command",
   "author": "liangchaofei <chaofei_liang@126.com>",
   "homepage": "https://github.com/liangchaofei/my-template-cli#readme",
   "license": "ISC",
@@ -27,6 +27,7 @@
     "url": "https://github.com/liangchaofei/my-template-cli/issues"
   },
   "dependencies": {
-    "@my-template-cli/command": "file: ../../models/command"
+    "colors": "^1.4.0",
+    "semver": "^7.3.5"
   }
 }
