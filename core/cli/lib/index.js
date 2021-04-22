@@ -9,10 +9,8 @@ const pathExists = require('path-exists').sync;
 const colors = require('colors/safe');
 const pkg = require('../package.json')
 const log = require('@my-template-cli/log')
-const init = require('@my-template-cli/init')
 const exec = require('@my-template-cli/exec')
 const commander = require('commander')
-const costant = require('./const');
 
 
 let args, config;
@@ -84,7 +82,6 @@ function registerCommand(){
 
 async function prepare(){
     checkPkgVersion()
-    checkNodeVersion()
     checktRoot()
     checkUserHome()
     checkEnv()
@@ -95,17 +92,7 @@ function checkPkgVersion(){
     log.notice('cli',pkg.version)
 }
 
-// 检查node版本号
-function checkNodeVersion(){
-    // 第一步，检查当前node版本号
-    const currentVersion = process.version;
-    // 第二步，获取最低版本号
-    const lowestVersion = costant.LOWEST_NODE_VERSION;
-    // 第三步，使用semver库进行比对
-    if(!semver.gte(currentVersion,lowestVersion)){
-        throw new Error(colors.red(`my-template-cli 需要安装 ${lowestVersion} 以上版本的 Node.js`))
-    }
-}
+
 
 // 检查root启动
 function checktRoot(){
