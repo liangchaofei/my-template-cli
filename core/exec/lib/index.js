@@ -20,15 +20,15 @@ async function exec() {
     if(!targetPath){
         targetPath = path.resolve(homePath, CACHE_DIR) // 生成缓存路径
         storeDir = path.resolve(targetPath,'node_modules')
-        console.log(targetPath,storeDir)
         pkg = new Package({
             targetPath,
             storeDir,
             packageName,
             packageVersion
         });
-        if(pkg.exists()){
+        if(await pkg.exists()){
             // 更新package
+            console.log('更新package')
         }else{
             // 安装package
             await pkg.install();
