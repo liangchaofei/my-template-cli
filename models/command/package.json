@@ -27,6 +27,7 @@
     "url": "https://github.com/liangchaofei/my-template-cli/issues"
   },
   "dependencies": {
+    "@my-template-cli/log": "file: ../../utils/log",
     "colors": "^1.4.0",
     "semver": "^7.3.5"
   }
