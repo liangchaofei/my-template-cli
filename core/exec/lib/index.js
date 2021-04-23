@@ -2,6 +2,7 @@
 const Package = require('@my-template-cli/package')
 const log = require('@my-template-cli/log')
 const path = require('path')
+const cp = require('child_process')
 
 const SETTINGS = {
     init: '@@my-template-cli/init'
@@ -44,7 +45,31 @@ async function exec() {
     const rootFile = pkg.getRootFilePath();
     if(rootFile){
         try{
-            require(rootFile).call(null,Array.from(arguments))
+            // 在当前进程中调用
+            // require(rootFile).call(null,Array.from(arguments))
+            // node子进程中调用
+            const args = Array.from(arguments);
+            const cmd = args[args.length - 1];
+            const o = Object.create(null);
+            Object.keys(cmd).forEach(key => {
+                if(cmd.hasOwnProperty(key) && !key.startsWith('_')&&key!=='parent'){
+                    o[key] = cmd[key]
+                }
+            })
+            args[args.length - 1] = o;
+            const code = `require('${rootFile}').call(null,${JSON.stringify(args)})`;
+            const child = cp.spawn('node',['-e',code],{
+                cwd: process.cwd,
+                stdio: 'inherit'
+            })
+            child.on('error',err=>{
+                log.verbose(err.message)
+                process.exit(1)
+            })
+            child.on('exit',e=>{
+                log.verbose('命令执行成功：'+ e)
+                process.exit(e)
+            })
         }catch(err){
             log.error(err.message)
         }
