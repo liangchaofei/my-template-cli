@@ -59,7 +59,7 @@ async function exec() {
             args[args.length - 1] = o;
             const code = `require('${rootFile}').call(null,${JSON.stringify(args)})`;
             const child = spawn('node',['-e',code],{
-                cwd: process.cwd,
+                cwd: process.cwd(),
                 stdio: 'inherit'
             })
             child.on('error',err=>{

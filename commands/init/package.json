@@ -28,6 +28,8 @@
   },
   "dependencies": {
     "@my-template-cli/command": "file: ../../models/command",
-    "@my-template-cli/log": "file: ../../utils/log"
+    "@my-template-cli/log": "file: ../../utils/log",
+    "fs-extra": "^9.1.0",
+    "inquirer": "^8.0.0"
   }
 }
