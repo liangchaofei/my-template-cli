@@ -6,6 +6,7 @@ const fse  = require('fs-extra')
 const semver = require('semver')
 const Command = require('@my-template-cli/command');
 const log = require('@my-template-cli/log')
+const getProjectTemplate = require('./getProjectTemplate')
 
 const TYPE_PROJECT = 'project';
 const TYPE_COMPONENT = 'component'
@@ -24,6 +25,7 @@ class InitCommand extends Command{
             if(projectInfo){
                 // 2.下载模版
                 log.verbose('projectInfo',projectInfo)
+                this.projectInfo = projectInfo;
                 this.downloadTemplate() 
                 // 3.安装模版
             }
@@ -41,6 +43,13 @@ class InitCommand extends Command{
         // 1.4 通过egg.js获取mongdb的数据并通过api返回
     }
     async prepare(){
+        // 0. 判断项目模版是否存在
+        const template = await getProjectTemplate();
+        console.log(template)
+        if(!template || template.length === 0){
+            throw new Error('模版不存在')
+        }
+        this.template = template;
         const localPath = process.cwd(); // 获取当前目录
         // 1.判断当前目录是否为空
        if(!this.isDirEmpty(localPath)){

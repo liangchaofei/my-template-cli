@@ -1,7 +1,7 @@
 {
-  "name": "@my-template-cli/init",
+  "name": "@my-template-cli/request",
   "version": "1.0.0",
-  "description": "cli init",
+  "description": "> TODO: description",
   "author": "liangchaofei <chaofei_liang@126.com>",
   "homepage": "https://github.com/liangchaofei/my-template-cli#readme",
   "license": "ISC",
@@ -27,11 +27,6 @@
     "url": "https://github.com/liangchaofei/my-template-cli/issues"
   },
   "dependencies": {
-    "@my-template-cli/command": "file: ../../models/command",
-    "@my-template-cli/log": "file: ../../utils/log",
-    "@my-template-cli/request": "file: ../../utils/request",
-    "fs-extra": "^9.1.0",
-    "inquirer": "^8.0.0",
-    "semver": "^7.3.5"
+    "axios": "^0.21.1"
   }
 }
