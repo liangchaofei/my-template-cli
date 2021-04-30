@@ -18,7 +18,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@my-template-cli/utils": "file:../../utils"
+    "@my-template-cli/utils": "file:../../utils",
+    "cli-spinner": "^0.2.10"
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"

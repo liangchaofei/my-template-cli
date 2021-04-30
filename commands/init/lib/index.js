@@ -1,11 +1,15 @@
 'use strict';
 
 const fs = require('fs');
+const path = require('path')
 const inquirer = require('inquirer')
 const fse  = require('fs-extra')
+const userHome = require('user-home')
 const semver = require('semver')
 const Command = require('@my-template-cli/command');
+const Package = require('@my-template-cli/package');
 const log = require('@my-template-cli/log')
+const { spinnerStart, sleep } = require('@my-template-cli/utils')
 const getProjectTemplate = require('./getProjectTemplate')
 
 const TYPE_PROJECT = 'project';
@@ -26,17 +30,57 @@ class InitCommand extends Command{
                 // 2.下载模版
                 log.verbose('projectInfo',projectInfo)
                 this.projectInfo = projectInfo;
-                this.downloadTemplate() 
+                await this.downloadTemplate() 
                 // 3.安装模版
             }
             
         }catch(e){
+            console.log('aaa')
             log.error(e.message)
         }
     }
 
-    downloadTemplate(){
+    async downloadTemplate(){
         // 1.通过项目模版api获取项目模版信息
+        const { projectTemplate } = this.projectInfo;
+        const templateInfo = this.template.find(item => item.npmName === projectTemplate)
+        const targetPath = path.resolve(userHome,'.my-template-cli-dev','template')
+        const storeDir = path.resolve(userHome,'.my-template-cli-dev','template', 'node_modules')
+        console.log(targetPath,storeDir)
+        const {npmName, version} = templateInfo;
+        const templageNpm = new Package({
+            targetPath,
+            storeDir,
+            packageName: npmName,
+            packageVersion: version
+        })
+        console.log('templageNpm',templageNpm)
+        if(! await templageNpm.exists()){
+            const spinner = spinnerStart('正在下载模版...');
+            await sleep()
+            try{
+                await templageNpm.install()
+                log.success('下载模版成功')
+            }catch(e){
+                throw e
+            } finally{
+                spinner.stop(true)
+            }
+    
+           
+        }else{
+
+            const spinner = spinnerStart('正在更新模版...');
+            await sleep()
+            try{
+                await templageNpm.update();
+                log.success('更新模版成功')
+            }catch(e){
+                throw e
+            } finally{
+                spinner.stop(true)
+            }
+        }
         // 1.1 通过egg.js搭建一套后端系统
         // 1.2 通过npm存储项目模版
         // 1.3 将项目模版信息存储到mongodb数据库中
@@ -145,6 +189,11 @@ class InitCommand extends Command{
                             return v;
                         }
                     }
+                },{
+                    type: 'list',
+                    name: 'projectTemplate',
+                    message: '请选择项目模版',
+                    choices: this.createTemplateChoices()
                 }
             ])
             console.log('aaa',project)
@@ -162,7 +211,12 @@ class InitCommand extends Command{
         fileList = fileList.filter(file => !file.startsWith('.') && ['node_modules'].indexOf(file)<0)
         return !fileList || fileList.length <=0;
     }
-
+    createTemplateChoices(){
+        return this.template.map(item => ({
+            value: item.npmName,
+            name: item.name
+        }))
+    }
 }
 
 function init(argv) {
