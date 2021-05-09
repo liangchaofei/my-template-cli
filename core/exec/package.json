@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@my-template-cli/log": "file: ../../utils/log",
-    "@my-template-cli/package": "file: ../../models/package"
+    "@my-template-cli/package": "file: ../../models/package",
+    "@my-template-cli/utils": "file: ../../utils/utils"
   }
 }
